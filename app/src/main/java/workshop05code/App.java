@@ -21,7 +21,7 @@ public class App {
         // must set before the Logger
         // loads logging.properties from the classpath
         try {// resources\logging.properties
-            LogManager.getLogManager().readConfiguration(new FileInputStream("resources/"));
+            LogManager.getLogManager().readConfiguration(new FileInputStream("resources/logging.properties"));
         } catch (SecurityException | IOException e1) {
             e1.printStackTrace();
         }
@@ -63,7 +63,7 @@ public class App {
 
         } catch (IOException e) {
             System.out.println("Not able to load . Sorry!");
-            System.out.println(e.getMessage());
+            logger.log(Level.WARNING,e.getMessage());
             return;
         }
 
@@ -71,7 +71,7 @@ public class App {
 
         try (Scanner scanner = new Scanner(System.in)) {
 
-            System.out.print("Enter a 4 letter word for a guess or q to quit: ");
+            System.out.print("Welcome to the Word Guessing Game! \nEnter a 4 letter word for a guess or q to quit: ");
             logger.log(Level.INFO,"The 'Guessing' program runs"); //logger if program runs
             String guess = scanner.nextLine();
 
