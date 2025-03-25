@@ -21,7 +21,7 @@ public class App {
         // must set before the Logger
         // loads logging.properties from the classpath
         try {// resources\logging.properties
-            LogManager.getLogManager().readConfiguration(new FileInputStream("logging_info/"));
+            LogManager.getLogManager().readConfiguration(new FileInputStream("resources/"));
         } catch (SecurityException | IOException e1) {
             e1.printStackTrace();
         }
@@ -38,15 +38,15 @@ public class App {
 
         wordleDatabaseConnection.createNewDatabase("words.db");
         if (wordleDatabaseConnection.checkIfConnectionDefined()) {
-            System.out.println("Wordle created and connected.");
+            logger.log(Level.INFO,"Wordle created and connected.");
         } else {
-            System.out.println("Not able to connect. Sorry!");
+            logger.log(Level.WARNING,"Not able to connect. Sorry!");
             return;
         }
         if (wordleDatabaseConnection.createWordleTables()) {
-            System.out.println("Wordle structures in place.");
+            logger.log(Level.INFO,"Wordle structures in place.");
         } else {
-            System.out.println("Not able to launch. Sorry!");
+            logger.log(Level.WARNING,"Not able to launch. Sorry!");
             return;
         }
 
@@ -87,10 +87,10 @@ public class App {
 
                     if (wordleDatabaseConnection.isValidWord(guess)) { 
                         System.out.println("Success! It is in the the list.\n");
-                        logger.log(Level.INFO,"User has provided input that is present in the list and return feedback (word was found)");
+                        logger.log(Level.INFO,"Word was present in the list, provided appropriate feedback");
                     }else{
                         System.out.println("Sorry. This word is NOT in the the list.\n");
-                        logger.log(Level.WARNING,"Returned response that word is not in the list");
+                        logger.log(Level.WARNING,"User entered '" + guess + "' which is not present in the list, returned appropriate response.");
                     }
 
                 }
